@@ -1,41 +1,37 @@
 <?php
-session_start();
-include('connection_file.php');
-if (isset($_POST['signUp'])) {
-    $email = $_POST['email'];
-    $full_name = $_POST['full-name'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    session_start();
+    include('connection_file.php');
 
-    if ($email=="" || $full_name=="" || $username=="" || $password=="") {
-        $_SESSION['errorMessage'] = "All Fields require !";
-    } elseif ($save_data =
-                mysqli_query($con, "INSERT INTO `users`(`full_name`, `email`, `username`, `password`) VALUES ('$full_name','$email','$username','$password')")
-            ) {
-        $_SESSION['successMessage'] = "Account created Successfully !!!";
-        header('location:login.php');
-    } else {
-        $_SESSION['errorMessage'] = "Can't create an Account !";
+    if (isset($_POST['signUp'])) {
+        $email = $_POST['email'];
+        $full_name = $_POST['full-name'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        if ($email=="" || $full_name=="" || $username=="" || $password=="") {
+            $_SESSION['errorMessage'] = "All Fields require !";
+        } elseif ($save_data =
+                    mysqli_query($con, "INSERT INTO `users`(`full_name`, `email`, `username`, `password`) VALUES ('$full_name','$email','$username','$password')")
+                ) {
+            $_SESSION['successMessage'] = "Account created Successfully !!!";
+            header('location:login.php');
+        } else {
+            $_SESSION['errorMessage'] = "Can't create an Account !";
+        }
     }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include('header.php'); ?>
+
     <title>Signup Page</title>
+
     <style>
-         .signup-body {
+        .signup-body {
             background-size:cover;
-            animation: myanimation 10s infinite;
-        }
-        @keyframes myanimation {
-            0% {background-image: url('images/backgrounds/login_page_bg.jpg');}
-            25%{background-image:url('images/backgrounds/bg1.jpg');}
-            50%{background-image:url('images/backgrounds/bg2.jpg');}
-            75%{background-image:url('images/backgrounds/bg3.jpg');}
-            100% {background-image: url('images/backgrounds/bg4.jpg');}
+            background-image: url('images/backgrounds/signup_bg.jpg');
+            background-size: cover;
         }
         .form-control {
             background-color:lightgray;
@@ -45,13 +41,13 @@ if (isset($_POST['signUp'])) {
             height:auto;
             margin:40px;
             padding: 5px;
-            opacity: 0.6;
+            opacity: 0.8;
             background-color:white;
             border-radius: 10%;
             border: 1px solid black;
         }
         .box:hover{
-            opacity: 0.8;
+            opacity: 1.0;
         }
         @media only screen and (max-width: 768px) {
             .signup-body {
@@ -67,24 +63,24 @@ if (isset($_POST['signUp'])) {
             <div class="col-md-4 col-sm-12">
                 <div class="box border col-12 row p-4">
                     <div class="col-12 text-center bg-dark rounded">
-                        <img src="images/backgrounds/main_logo.png" alt="" srcset="">
+                        <img src="images/backgrounds/main_logo.png">
                     </div>
 
-                    <form action="signup.php" method="post" class="">
+                    <form action="signup.php" method="post">
                         <label class="col-12 mt-3">
-                            <input type="email" name="email" class="form-control" id="" placeholder="Enter your Email" required>
+                            <input type="email" name="email" class="form-control" placeholder="Enter your Email" required>
                         </label>
 
                         <label class="col-12 mt-3">
-                            <input type="text" name="full-name" class="form-control" id="" placeholder="Full Name" required>
+                            <input type="text" name="full-name" class="form-control" placeholder="Full Name" required>
                         </label>
 
                         <label class="col-12 mt-3">
-                            <input type="text" name="username" class="form-control" id="" placeholder="Username" required>
+                            <input type="text" name="username" class="form-control" placeholder="Username" required>
                         </label>
 
                         <label class="col-12 mt-3">
-                            <input type="password" name="password" id="" class="form-control" placeholder="Password" required>
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
                         </label>
 
                         <button type="submit"
@@ -101,7 +97,6 @@ if (isset($_POST['signUp'])) {
                         </p>
 
                     </form>
-
                 </div>
 
                 <div class="box border rounded col-12 text-center pt-3">
@@ -113,15 +108,15 @@ if (isset($_POST['signUp'])) {
 
     <?php include('footer.php') ?>
 
-<?php
-    if (isset($_SESSION["errorMessage"])) {
-        $message = $_SESSION["errorMessage"] ;
-        echo '<script type = "text/javascript">
-            alertify.set("notifier","position","top-center");
-            alertify.error("' . $message . '");
-        </script>';
-        unset($_SESSION["errorMessage"]);
-    }
-?>
+    <?php
+        if (isset($_SESSION["errorMessage"])) {
+            $message = $_SESSION["errorMessage"] ;
+            echo '<script type = "text/javascript">
+                alertify.set("notifier","position","top-center");
+                alertify.error("' . $message . '");
+            </script>';
+            unset($_SESSION["errorMessage"]);
+        }
+    ?>
 </body>
 </html>

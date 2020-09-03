@@ -1,25 +1,31 @@
 <?php
-session_start();
-if (!$_SESSION['user']) {
-    header('location:login.php');
-}
-include('connection_file.php');
-if (isset($_POST["searchResult"])) {
-    $search = $_POST['search-keyword'];
-    $data = mysqli_query(
-        $con,
-        "select * from movies where
-        movie_name like '%$search%' OR
-        description like '%$search%' OR
-        released_date like '%$search%'"
-    );
-    if (mysqli_num_rows($data) < 1) {
-        $_SESSION['alertMessage'] = "No movies found for this keyword !";
+    session_start();
+
+    if (!$_SESSION['user']) {
+        header('location:login.php');
+    }
+
+    include('connection_file.php');
+
+    if (isset($_POST["searchResult"])) {
+        if ($_POST["searchResult"] != "") {
+            $search = $_POST['search-keyword'];
+            $data = mysqli_query(
+                $con,
+                "select * from movies where movie_name like '%$search%'"
+            );
+
+            if (mysqli_num_rows($data) < 1) {
+                $_SESSION['errorMessage'] = "No movies found for this keyword !";
+                $data = mysqli_query($con, "SELECT * FROM `movies` ");
+            }
+        } else {
+            $_SESSION['errorMessage'] = "Please Enter any keyword for Movie !";
+            $data = mysqli_query($con, "SELECT * FROM `movies` ");
+        }
+    } else {
         $data = mysqli_query($con, "SELECT * FROM `movies` ");
     }
-} else {
-    $data = mysqli_query($con, "SELECT * FROM `movies` ");
-}
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +45,7 @@ if (isset($_POST["searchResult"])) {
 <body>
     <nav class="navbar p-3 navbar-expand-md navbar-dark">
         <a href="index.php" class="navbar-brand col-md-4 text-center">
-            <img src="images/backgrounds/main_logo.png" alt="" srcset="">
+            <img src="images/backgrounds/main_logo.png">
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -50,12 +56,14 @@ if (isset($_POST["searchResult"])) {
             <form class="form-inline col-md-6 text-center" action="index.php" method="POST">
                 <input type="text" list="movies" autocomplete="off" class="form-control mr-sm-2" name="search-keyword" placeholder="Search Movie" required>
                 <datalist id="movies">
-                        <?php
-                            $selectuserMovies = mysqli_query($con, "SELECT * FROM `movies`");
-                            while ($moviedata = mysqli_fetch_array($selectuserMovies)) {
-                                echo "<option value = '$moviedata[movie_name]'></option>";
-                            }
+                <?php
+                    $selectuserMovies = mysqli_query($con, "SELECT * FROM `movies`");
+                    while ($moviedata = mysqli_fetch_array($selectuserMovies)) {
                         ?>
+                    <option value = "<?php echo $moviedata['movie_name'] ?>"></option>";
+                <?php
+                    }
+                ?>
                     </datalist>
                 <button class="btn btn-outline-light my-2 my-sm-0 " type="submit" name="searchResult">
                     <i class="fa fa-search"></i>
@@ -65,7 +73,7 @@ if (isset($_POST["searchResult"])) {
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['user']['full_name'] ?></a>
                     <div class="dropdown-menu">
-                        <a href="?logout" class="dropdown-item">
+                        <a href="logout.php?logout" class="dropdown-item">
                             <i class="fas fa-sign-out-alt"></i> Sign Out
                         </a>
                     </div>
@@ -84,12 +92,9 @@ if (isset($_POST["searchResult"])) {
             <div class="col-lg-2 col-sm-4 col-xs-6 mx-lg-3">
                 <img src="<?php echo 'images/posts/'.$selected_data['movie_image'] ?>"
                     class="poster col-12"
-                    onclick="goToMoviePage(<?php echo $selected_data['post_id'] ?>)"
                 >
                 <div class=" text-center col-12">
-                    <button class="btn btn-secondary my-2 btn-block rounded"
-                        onclick="goToMoviePage(<?php echo $selected_data['post_id'] ?>)"
-                    >
+                    <button class="btn btn-secondary my-2 btn-block rounded">
                         <?php echo $selected_data['movie_name'] ?>
                     </button>
                 </div>
@@ -100,14 +105,29 @@ if (isset($_POST["searchResult"])) {
         </div>
     </div>
     <div class="container-fluid text-center bg-dark text-light p-3 small-text footer">
-        <p col-12>
+        <p>
             Download And Watch Movies Online For Free © 2020 All Rights Reserved
         </p>
-        <p col-12>
-            <Strong>Disclaimer - All My Post are Free Available On INTERNET Posted By Somebody Else<br>
+        <p>
+            <Strong>
+            Disclaimer - All My Post are Free Available On INTERNET Posted By Somebody Else<br>
             I'm Not VIOLATING Any COPYRIGHTED LAW. If Anything Is Against LAW, Please Notify Us
+            </Strong>
         </p>
     </div>
     <?php include('footer.php') ?>
+
+    <?php
+        if (isset($_SESSION["errorMessage"])) {
+            $message = $_SESSION["errorMessage"] ;
+            echo '<script type = "text/javascript">
+                alertify.set("notifier","position","top-center");
+                alertify.alert("' . $message . '");
+            </script>';
+            unset($_SESSION["errorMessage"]);
+            header('location:index.php');
+        }
+    ?>
+
 </body>
 </html>
