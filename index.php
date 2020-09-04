@@ -8,7 +8,7 @@
     include('connection_file.php');
 
     if (isset($_POST["searchResult"])) {
-        if ($_POST["searchResult"] != "") {
+        if (!$_POST["search-keyword"] == "") {
             $search = $_POST['search-keyword'];
             $data = mysqli_query(
                 $con,
