@@ -35,7 +35,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include('header.php') ?>
+<?php include('header.php') ?>
     <title>Welcome Home</title>
     <style>
         .navbar{
@@ -58,14 +58,10 @@
             <form class="form-inline col-md-6 text-center" action="index.php" method="POST">
                 <input type="text" list="movies" autocomplete="off" class="form-control mr-sm-2" name="search-keyword" placeholder="Search Movie" required>
                 <datalist id="movies">
-                <?php
-                    while ($moviedata = mysqli_fetch_array($selectuserMovies)) {
-                        ?>
+                    <?php while ($moviedata = mysqli_fetch_array($selectuserMovies)) { ?>
                     <option value = "<?php echo $moviedata['movie_name'] ?>"></option>";
-                <?php
-                    }
-                ?>
-                    </datalist>
+                    <?php } ?>
+                </datalist>
                 <button class="btn btn-outline-light my-2 my-sm-0 " type="submit" name="searchResult">
                     <i class="fa fa-search"></i>
                 </button>
@@ -91,9 +87,7 @@
                 while ($selected_data = mysqli_fetch_array($data)) {
                     ?>
             <div class="col-lg-2 col-sm-4 col-xs-6 mx-lg-3">
-                <img src="<?php echo 'images/posts/'.$selected_data['movie_image'] ?>"
-                    class="poster col-12"
-                >
+                <img src="<?php echo 'images/posts/'.$selected_data['movie_image'] ?>" class="poster col-12" >
                 <div class=" text-center col-12">
                     <button class="btn btn-secondary my-2 btn-block rounded">
                         <?php echo $selected_data['movie_name'] ?>
@@ -128,6 +122,5 @@
             header('location:index.php');
         }
     ?>
-
 </body>
 </html>
