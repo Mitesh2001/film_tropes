@@ -16,7 +16,7 @@
             );
 
             if (mysqli_num_rows($data) < 1) {
-                $_SESSION['errorMessage'] = "No movies found for this keyword !";
+                $_SESSION['errorMessage'] = "No movies found !!";
                 $data = mysqli_query($con, "SELECT * FROM `movies` ");
             }
         } else {
@@ -26,6 +26,8 @@
     } else {
         $data = mysqli_query($con, "SELECT * FROM `movies` ");
     }
+
+    $selectuserMovies = mysqli_query($con, "SELECT * FROM `movies`");
 
 ?>
 <!DOCTYPE html>
@@ -57,7 +59,6 @@
                 <input type="text" list="movies" autocomplete="off" class="form-control mr-sm-2" name="search-keyword" placeholder="Search Movie" required>
                 <datalist id="movies">
                 <?php
-                    $selectuserMovies = mysqli_query($con, "SELECT * FROM `movies`");
                     while ($moviedata = mysqli_fetch_array($selectuserMovies)) {
                         ?>
                     <option value = "<?php echo $moviedata['movie_name'] ?>"></option>";
@@ -121,8 +122,7 @@
         if (isset($_SESSION["errorMessage"])) {
             $message = $_SESSION["errorMessage"] ;
             echo '<script type = "text/javascript">
-                alertify.set("notifier","position","top-center");
-                alertify.alert("' . $message . '");
+                alertify.alert("Alert","' . $message . '");
             </script>';
             unset($_SESSION["errorMessage"]);
             header('location:index.php');

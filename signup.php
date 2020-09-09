@@ -4,14 +4,14 @@
 
     if (isset($_POST['signUp'])) {
         $email = $_POST['email'];
-        $full_name = $_POST['full-name'];
+        $fullname = $_POST['full_name'];
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        if ($email=="" || $full_name=="" || $username=="" || $password=="") {
+        if ($email=="" || $fullname=="" || $username=="" || $password=="") {
             $_SESSION['errorMessage'] = "All Fields require !";
         } elseif ($save_data =
-                    mysqli_query($con, "INSERT INTO `users`(`full_name`, `email`, `username`, `password`) VALUES ('$full_name','$email','$username','$password')")
+                    mysqli_query($con, "INSERT INTO `users`(`full_name`, `email`, `username`, `password`) VALUES ('$fullname','$email','$username','$password')")
                 ) {
             $_SESSION['successMessage'] = "Account created Successfully !!!";
             header('location:login.php');
@@ -45,9 +45,7 @@
             background-color:white;
             border-radius: 10%;
             border: 1px solid black;
-        }
-        .box:hover{
-            opacity: 1.0;
+        }full_nameacity: 1.0;
         }
         @media only screen and (max-width: 768px) {
             .signup-body {
@@ -72,7 +70,7 @@
                         </label>
 
                         <label class="col-12 mt-3">
-                            <input type="text" name="full-name" class="form-control" placeholder="Full Name" required>
+                            <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
                         </label>
 
                         <label class="col-12 mt-3">
