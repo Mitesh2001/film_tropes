@@ -90,7 +90,7 @@
 
                         <hr class="m-4">
 
-                        <p class="text-dark col-12 text-center">
+                        <p class="text-dark text-center">
                             By signing up, you agree to our Terms Data Policy .
                         </p>
 
