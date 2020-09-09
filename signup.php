@@ -45,7 +45,10 @@
             background-color:white;
             border-radius: 10%;
             border: 1px solid black;
-        }full_nameacity: 1.0;
+            opacity: 0.8;
+        }
+        .box:hover {
+            opacity: 1.0;
         }
         @media only screen and (max-width: 768px) {
             .signup-body {
@@ -90,7 +93,7 @@
 
                         <hr class="m-4">
 
-                        <p class="text-dark text-center">
+                        <p class="text-dark col-12 text-center">
                             By signing up, you agree to our Terms Data Policy .
                         </p>
 
