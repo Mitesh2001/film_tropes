@@ -23,9 +23,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include('header.php'); ?>
+<?php include('header.php'); ?>
 
     <title>Login</title>
+
     <style>
         .box {
             height:auto;

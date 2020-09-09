@@ -116,7 +116,7 @@
             </Strong>
         </p>
     </div>
-    <?php include('footer.php') ?>
+<?php include('footer.php') ?>
 
     <?php
         if (isset($_SESSION["errorMessage"])) {

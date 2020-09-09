@@ -23,7 +23,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include('header.php'); ?>
+<?php include('header.php'); ?>
 
     <title>Signup Page</title>
 
@@ -85,15 +85,15 @@
                         </label>
 
                         <button type="submit"
-                        class="logn-button btn btn-outline-info btn-block mt-3 col-12 btn-sm"
-                        name="signUp"
+                            class="logn-button btn btn-outline-info btn-block mt-3 col-12 btn-sm"
+                            name="signUp"
                         >
                             Sign Up
                         </button>
 
                         <hr class="m-4">
 
-                        <p class="text-dark col-12 text-center">
+                        <p class="text-dark text-center">
                             By signing up, you agree to our Terms Data Policy .
                         </p>
 
@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <?php include('footer.php') ?>
+<?php include('footer.php') ?>
 
     <?php
         if (isset($_SESSION["errorMessage"])) {
